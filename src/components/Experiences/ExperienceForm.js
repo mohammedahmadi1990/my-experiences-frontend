@@ -1,11 +1,14 @@
-// src/components/Experiences/ExperienceForm.js
 import React, { useState } from 'react';
 import instance from '../../utils/axiosInstance';
 
 const ExperienceForm = () => {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
+  const [exp_name, setExpName] = useState('');
+  const [exp_description, setExpDescription] = useState('');
   const [region, setRegion] = useState('');
+  const [exp_type, setExpType] = useState('');
+  const [country, setCountry] = useState('');
+  const [lon, setLon] = useState('');
+  const [lat, setLat] = useState('');
   const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
@@ -13,15 +16,23 @@ const ExperienceForm = () => {
 
     try {
       const response = await instance.post('/api/experiences', {
-        name,
-        description,
-        region
+        exp_name,
+        exp_description,
+        region,
+        exp_type,
+        country,
+        lon: parseFloat(lon),
+        lat: parseFloat(lat),
       });
 
       console.log('Experience added:', response.data);
-      setName('');
-      setDescription('');
+      setExpName('');
+      setExpDescription('');
       setRegion('');
+      setExpType('');
+      setCountry('');
+      setLon('');
+      setLat('');
     } catch (err) {
       setError('Failed to add the experience.');
     }
@@ -34,19 +45,21 @@ const ExperienceForm = () => {
           <label>Name:</label>
           <input 
             type="text"
-            value={name}
-            onChange={e => setName(e.target.value)}
+            value={exp_name}
+            onChange={e => setExpName(e.target.value)}
             required
           />
         </div>
+
         <div>
           <label>Description:</label>
           <textarea 
-            value={description}
-            onChange={e => setDescription(e.target.value)}
+            value={exp_description}
+            onChange={e => setExpDescription(e.target.value)}
             required
           />
         </div>
+
         <div>
           <label>Region:</label>
           <input 
@@ -56,6 +69,49 @@ const ExperienceForm = () => {
             required
           />
         </div>
+
+        <div>
+          <label>Type:</label>
+          <input 
+            type="text"
+            value={exp_type}
+            onChange={e => setExpType(e.target.value)}
+            required
+          />
+        </div>
+
+        <div>
+          <label>Country:</label>
+          <input 
+            type="text"
+            value={country}
+            onChange={e => setCountry(e.target.value)}
+            required
+          />
+        </div>
+
+        <div>
+          <label>Longitude:</label>
+          <input 
+            type="number"
+            step="0.0001"
+            value={lon}
+            onChange={e => setLon(e.target.value)}
+            required
+          />
+        </div>
+
+        <div>
+          <label>Latitude:</label>
+          <input 
+            type="number"
+            step="0.0001"
+            value={lat}
+            onChange={e => setLat(e.target.value)}
+            required
+          />
+        </div>
+
         {error && <p>{error}</p>}
         <button type="submit">Add Experience</button>
       </form>

@@ -1,20 +1,29 @@
-// src/components/Experiences/BookingForm.js
 import React, { useState } from 'react';
 import instance from '../../utils/axiosInstance';
+import { useLocation } from 'react-router-dom';
 
-
-const BookingForm = ({ experience }) => {
+const BookingForm = ({ onClose }) => {
   const [people, setPeople] = useState(1);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const location = useLocation();
+  const experienceFromState = location.state?.experience;
 
   const handleBooking = async () => {
     try {
-      const response = await instance.post(`/api/experiences/${experience.id}/book`, {
+      const response = await instance.post(`/api/experiences/${experienceFromState.id}/book`, {
         people
       });
 
       console.log('Booking successful:', response.data);
+      setSuccess('Booking was successful!');
       setPeople(1);
+
+      
+      setTimeout(() => {
+          setSuccess(''); 
+          if (onClose) onClose(); 
+      }, 2000);
     } catch (err) {
       setError('Failed to book the experience.');
     }
@@ -22,7 +31,7 @@ const BookingForm = ({ experience }) => {
 
   return (
     <div>
-      <h3>Booking for {experience.name}</h3>
+      <h3>Booking for {experienceFromState.exp_name}</h3>
       <label>
         Number of people: 
         <input 
@@ -33,7 +42,8 @@ const BookingForm = ({ experience }) => {
         />
       </label>
       <button onClick={handleBooking}>Book Experience</button>
-      {error && <p>{error}</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {success && <p style={{ color: 'green' }}>{success}</p>}
     </div>
   );
 };

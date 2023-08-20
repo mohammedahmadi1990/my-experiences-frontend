@@ -17,7 +17,7 @@ const ExperienceList = () => {
       } catch (err) {
         console.error('Failed to fetch experiences:', err);
         if (err.response && err.response.status === 401) {
-          navigate('/login'); // redirect to the login page
+          navigate('/login'); 
         }
       }
     };
@@ -30,13 +30,13 @@ const ExperienceList = () => {
         <ul>
             {experiences.map(experience => (
                 <li key={experience.id}>
-                    {experience.exp_name} - {experience.exp_description}
-                    <button onClick={() => setSelectedExperience(experience)}>Book</button>
+                    {experience.exp_name} - {experience.exp_description}                  
+                    <button onClick={() => navigate(`/experiences/${experience.id}/book`, { state: { experience } })}>Book</button>
                 </li>
             ))}
         </ul>
 
-        {selectedExperience && <BookingForm experience={selectedExperience} />}
+        {selectedExperience ? <BookingForm experience={selectedExperience} onClose={() => setSelectedExperience(null)} /> : null}
     </div>
 );
 };

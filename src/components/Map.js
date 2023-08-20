@@ -6,7 +6,6 @@ import instance from '../utils/axiosInstance';
 const MapComponent = () => {
   const [experiences, setExperiences] = useState([]);
 
-  // Fetching the experiences
   useEffect(() => {
     const fetchExperiences = async () => {
       try {

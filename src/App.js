@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
 
 // Components
+import BookingForm from './components/Experiences/BookingForm';
 import ExperienceForm from './components/Experiences/ExperienceForm';
 import ExperienceList from './components/Experiences/ExperienceList';
 import Search from './components/Experiences/Search';
@@ -25,7 +26,8 @@ function App() {
             <Route path="/logout" element={<Logout />} />
             <Route path="/search" element={<Search />} />
             <Route path="/add-experience" element={<ExperienceForm />} />
-            <Route path="/experiences" element={<ExperienceList />} />            
+            <Route path="/experiences" element={<ExperienceList />} />   
+            <Route path="/experiences/:id/book" element={<BookingForm />} />         
             <Route 
               path="/map" 
               element={
