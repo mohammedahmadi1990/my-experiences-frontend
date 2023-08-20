@@ -1,0 +1,30 @@
+.experience-view-container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .left-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 20%; 
+    background-color: #f0f0f0;
+  }
+  
+  .search-container {
+    padding: 1em;
+    border-bottom: 1px solid #ddd;
+    background-color: white;
+  }
+  
+  .list-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1em;
+  }
+  
+  .map-container {
+    flex: 2;
+    position: relative;
+  }
+  
