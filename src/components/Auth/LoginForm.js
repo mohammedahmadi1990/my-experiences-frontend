@@ -1,20 +1,28 @@
+// components/LoginForm.js
 import React, { useState } from 'react';
-import axios from 'axios';
+import instance from '../../utils/axiosInstance'; 
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/api/users/login', {
-        email,
+      const response = await instance.post('/api/users/login', {
+        username,
         password
       });
-      // You'd normally handle the successful login here, e.g., storing the token, navigating to another page, etc.
-      console.log('User logged in:', response.data);
+
+      if (response.data.message === "Logged in successfully") {
+        console.log('User logged in:', response.data);
+        navigate('/experiences'); 
+      } else {
+        setError('Failed to login. Please check your credentials.');
+      }
     } catch (err) {
       setError('Failed to login. Please check your credentials.');
     }
@@ -24,11 +32,11 @@ const LoginForm = () => {
     <div>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Email:</label>
+          <label>Username:</label>
           <input 
-            type="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
+            type="text"
+            value={username}
+            onChange={e => setUsername(e.target.value)}
             required
           />
         </div>

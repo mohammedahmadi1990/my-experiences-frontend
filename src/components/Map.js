@@ -1,7 +1,7 @@
 // src/components/Map.js
 import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import axios from 'axios';
+import instance from '../utils/axiosInstance';
 
 const MapComponent = () => {
   const [experiences, setExperiences] = useState([]);
@@ -10,7 +10,7 @@ const MapComponent = () => {
   useEffect(() => {
     const fetchExperiences = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/experiences');
+        const response = await instance.get('/api/experiences');
         setExperiences(response.data);
       } catch (err) {
         console.error('Failed to fetch experiences:', err);

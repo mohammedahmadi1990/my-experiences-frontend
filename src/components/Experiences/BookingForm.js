@@ -1,6 +1,7 @@
 // src/components/Experiences/BookingForm.js
 import React, { useState } from 'react';
-import axios from 'axios';
+import instance from '../../utils/axiosInstance';
+
 
 const BookingForm = ({ experience }) => {
   const [people, setPeople] = useState(1);
@@ -8,7 +9,7 @@ const BookingForm = ({ experience }) => {
 
   const handleBooking = async () => {
     try {
-      const response = await axios.post(`http://localhost:3000/api/experiences/${experience.id}/book`, {
+      const response = await instance.post(`/api/experiences/${experience.id}/book`, {
         people
       });
 

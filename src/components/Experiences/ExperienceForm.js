@@ -1,6 +1,6 @@
 // src/components/Experiences/ExperienceForm.js
 import React, { useState } from 'react';
-import axios from 'axios';
+import instance from '../../utils/axiosInstance';
 
 const ExperienceForm = () => {
   const [name, setName] = useState('');
@@ -12,7 +12,7 @@ const ExperienceForm = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:3000/api/experiences', {
+      const response = await instance.post('/api/experiences', {
         name,
         description,
         region

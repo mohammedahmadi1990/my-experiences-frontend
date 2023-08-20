@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import instance from '../../utils/axiosInstance';
 
 const Search = () => {
   const [region, setRegion] = useState('');
@@ -7,7 +7,7 @@ const Search = () => {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/experiences?region=${region}`);
+      const response = await instance.get(`/api/experiences?region=${region}`);
       setResults(response.data);
     } catch (err) {
       console.error('Failed to fetch experiences:', err);
