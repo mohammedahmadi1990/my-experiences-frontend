@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import instance from '../../utils/axiosInstance';
+import { useNavigate } from 'react-router-dom';
+import './style.css'; 
 
 const ExperienceForm = () => {
   const [exp_name, setExpName] = useState('');
@@ -10,6 +12,8 @@ const ExperienceForm = () => {
   const [lon, setLon] = useState('');
   const [lat, setLat] = useState('');
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,20 +30,17 @@ const ExperienceForm = () => {
       });
 
       console.log('Experience added:', response.data);
-      setExpName('');
-      setExpDescription('');
-      setRegion('');
-      setExpType('');
-      setCountry('');
-      setLon('');
-      setLat('');
+      setSuccessMessage('Experience added successfully.');
+        setTimeout(() => {
+          navigate('/');
+        }, 3000);
     } catch (err) {
       setError('Failed to add the experience.');
     }
   };
 
   return (
-    <div>
+    <div className="form-container">
       <form onSubmit={handleSubmit}>
         <div>
           <label>Name:</label>
@@ -112,7 +113,8 @@ const ExperienceForm = () => {
           />
         </div>
 
-        {error && <p>{error}</p>}
+        {error && <p className="error-message">{error}</p>}
+        {successMessage && <p className="success-message">{successMessage}</p>}
         <button type="submit">Add Experience</button>
       </form>
     </div>

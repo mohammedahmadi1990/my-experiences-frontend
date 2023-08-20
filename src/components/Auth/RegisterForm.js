@@ -1,31 +1,36 @@
-// components/LoginForm.js
+// components/RegisterForm.js
 import React, { useState } from 'react';
 import instance from '../../utils/axiosInstance'; 
 import { Link, useNavigate } from 'react-router-dom';
 import './style.css'; 
 
-const LoginForm = () => {
+const RegisterForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await instance.post('/api/users/login', {
+      const response = await instance.post('/api/users/register', {
         username,
-        password
+        password,
+        email
       });
 
-      if (response.data.message === "Logged in successfully") {
-        console.log('User logged in:', response.data);
-        navigate('/'); 
+      if (response.data.message === "User registered successfully") {
+        setSuccessMessage('User registered successfully. You can now login.');
+        setTimeout(() => {
+          navigate('/');
+        }, 3000);
       } else {
-        setError('Failed to login. Please check your credentials.');
+        setError('Failed to register. Please check your information.');
       }
     } catch (err) {
-      setError('Failed to login. Please check your credentials.');
+      setError('Failed to register. Please check your information.');
     }
   };
 
@@ -50,14 +55,24 @@ const LoginForm = () => {
             required
           />
         </div>
+        <div>
+          <label>Email:</label>
+          <input 
+            type="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            required
+          />
+        </div>
         {error && <p className="error-message">{error}</p>}
-        <button type="submit">Login</button>
+        {successMessage && <p className="success-message">{successMessage}</p>}
+        <button type="submit">Register</button>
       </form>
       <p className="login-link">
-        Don't have an account? <Link to="/register">Register</Link>
+        Already have an account? <Link to="/login">Login</Link>
       </p>
     </div>
   );
 };
 
-export default LoginForm;
+export default RegisterForm;

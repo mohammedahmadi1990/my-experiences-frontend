@@ -1,0 +1,49 @@
+/* src/components/Experiences/ExperienceList.css */
+.experience-list-container {
+    display: flex;
+  }
+  
+  .experience-card {
+    padding: 0px 0px 10px 0px;
+    margin-left: -45px;
+    transition: background-color 0.3s ease;
+    list-style: none; 
+  }
+  
+  .experience-card:hover {
+    background-color: #ffffff; 
+  }
+  
+  .experience-content {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .experience-content h3 {
+    margin: 0;
+  }
+  
+  .experience-content p {
+    margin: 7px 5px;
+  }
+  
+  .experience-content button {
+    background: #51d08c;
+    margin-left: 70%;
+    width: 100px;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+
+  .experience-content button:hover {
+    background: #9cd4b6;
+  } 
+  
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;        
+  }
